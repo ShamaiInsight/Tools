@@ -9,9 +9,10 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        textarea, input, select {
+        textarea, input, select, button {
             width: 100%;
             max-width: 800px;
+            margin: 5px 0;
         }
         .episode {
             border: 1px solid #ccc;
@@ -26,27 +27,33 @@
             color: gray;
             font-size: 0.9em;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <h1>Scripture Splitter with API</h1>
     <label for="scriptureReference">Enter Scripture Reference (e.g., "1 Samuel 15"):</label>
     <input id="scriptureReference" type="text" placeholder="Enter scripture reference">
-    <br><br>
+    <br>
     <label for="readingSpeed">Set Reading Speed (words per second):</label>
     <input id="readingSpeed" type="number" value="4" min="1" placeholder="Enter reading speed">
-    <br><br>
+    <br>
     <label for="maxTime">Set Maximum Time Per Episode (seconds):</label>
     <input id="maxTime" type="number" value="90" min="10" placeholder="Enter maximum time">
-    <br><br>
+    <br>
     <label for="startEpisode">Set Starting Episode Number:</label>
     <input id="startEpisode" type="number" value="1" min="1" placeholder="Enter starting episode number">
-    <br><br>
+    <br>
     <button onclick="fetchAndSplitScripture()">Fetch and Split Scripture</button>
+    <button onclick="toggleScriptureVisibility()">Toggle Scripture Visibility</button>
     <h2>Output Episodes</h2>
     <div id="output"></div>
 
     <script>
+        let scriptureVisible = true; // Tracks the visibility of scripture
+
         async function fetchAndSplitScripture() {
             const reference = document.getElementById("scriptureReference").value.trim();
             const readingSpeed = parseFloat(document.getElementById("readingSpeed").value);
@@ -148,12 +155,21 @@
                 episodeInfo.innerText = `${wordCount} words | Approx. reading time: ${readingTime} seconds | Verses: ${firstVerse.chapter}:${firstVerse.verse}–${lastVerse.chapter}:${lastVerse.verse}`;
 
                 const episodeContent = document.createElement("div");
+                episodeContent.className = "scripture-content";
                 episodeContent.innerText = chunk.map(verse => verse.fullText).join(" ");
 
                 episodeDiv.appendChild(episodeTitle);
                 episodeDiv.appendChild(episodeInfo);
                 episodeDiv.appendChild(episodeContent);
                 outputDiv.appendChild(episodeDiv);
+            });
+        }
+
+        function toggleScriptureVisibility() {
+            scriptureVisible = !scriptureVisible; // Toggle visibility state
+            const scriptureContents = document.querySelectorAll(".scripture-content");
+            scriptureContents.forEach(content => {
+                content.classList.toggle("hidden", !scriptureVisible);
             });
         }
     </script>
