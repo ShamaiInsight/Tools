@@ -1,6 +1,6 @@
-# Scripture Splitter Tool
-
-This tool splits a scripture reference into manageable episodes based on user-defined reading speed and maximum reading time per episode. The tool uses the Bible API to fetch scripture text and dynamically generates episodes, allowing customization of episode numbering, reading speed, and more.
+# Scripture Splitter Tool (BKIM Ministry)
+### By Joel Deroche
+This tool splits a scripture reference into manageable episodes based on user-defined reading speed and maximum reading time per episode. The tool uses the Bible API to fetch scripture text and dynamically generates episodes, allowing customization of episode numbering, reading speed, and more. 
 
 ---
 
